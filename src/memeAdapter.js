@@ -1,18 +1,18 @@
-class NoteAdapter {
+class MemeAdapter {
   getNotes() {
-    const baseURL = `http://localhost:3000/api/v1/notes`
+    const baseURL = `http://10.39.110.217:3000/memes`
     return fetch(baseURL)
       .then(response => response.json());
   }
 
   getNote(id) {
-    const baseURL = `http://localhost:3000/api/v1/notes/${id}`
+    const baseURL = `http://10.39.110.217:3000/memes/${id}`
     return fetch(baseURL)
       .then(response => response.json());
   }
 
   newNote(note) {
-    const baseURL = `http://localhost:3000/api/v1/notes/`
+    const baseURL = `http://10.39.110.217:3000/memes/`
     const options = {
       method: 'POST',
       headers: {
@@ -25,7 +25,7 @@ class NoteAdapter {
   }
 
   editNote(obj) {
-    const baseURL = `http://localhost:3000/api/v1/notes/${obj.id}`
+    const baseURL = `http://10.39.110.217:3000/memes/${obj.id}`
     const options = {
       method: 'PATCH',
       headers: {
@@ -40,7 +40,7 @@ class NoteAdapter {
   }
 
   deleteNote(id) {
-    const baseURL = `http://localhost:3000/api/v1/notes/${id}`
+    const baseURL = `http://10.39.110.217:3000/memes/${id}`
     const options = {
       method: 'DELETE'
     }

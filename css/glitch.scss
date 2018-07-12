@@ -1,0 +1,60 @@
+//source - https://codepen.io/lbebber/pen/ypgql?editors=1100
+// @import "compass/css3";
+
+.glitch{
+  font-family: 'Fugaz One', sans-serif;
+  color:#59d2dd;
+  // text-shadow: -1px 1px 0px #295DAA;
+  text-shadow: -10px 10px 0px #193867,
+                 -20px 20px 0px #1e437b,
+                 -30px 30px 0px #234e90;
+  font-size:100px;
+  position:relative;
+  width:400px;
+  margin:0 auto;
+}
+@keyframes noise-anim{
+  $steps:20;
+  @for $i from 0 through $steps{
+    #{percentage($i*(1/$steps))}{
+      clip:rect(random(100)+px,9999px,random(100)+px,0);
+    }
+  }
+}
+.glitch:after{
+  content:attr(data-text);
+  position:absolute;
+  left:2px;
+  text-shadow: -10px 10px 0px #193867,
+                 -20px 20px 0px #1e437b,
+                 -30px 30px 0px #234e90;
+  top:0;
+  color:#59d2dd;
+  background:transparent;
+  overflow:hidden;
+  clip:rect(0,900px,0,0);
+  animation:noise-anim 2s infinite linear alternate-reverse;
+}
+
+@keyframes noise-anim-2{
+  $steps:20;
+  @for $i from 0 through $steps{
+    #{percentage($i*(1/$steps))}{
+      clip:rect(random(100)+px,9999px,random(100)+px,0);
+    }
+  }
+}
+.glitch:before{
+  content:attr(data-text);
+  position:absolute;
+  left:-2px;
+  text-shadow: -10px 10px 0px #193867,
+                 -20px 20px 0px #1e437b,
+                 -30px 30px 0px #234e90;
+  top:0;
+  color:#59d2dd;
+  background:none;
+  overflow:hidden;
+  clip:rect(0,900px,0,0);
+  animation:noise-anim-2 3s infinite linear alternate-reverse;
+}

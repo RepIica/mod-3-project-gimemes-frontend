@@ -1,4 +1,4 @@
-const NotesController = (() => {
+const MemesController = (() => {
 
   const main = document.querySelector("#main")
 
