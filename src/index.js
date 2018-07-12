@@ -1,5 +1,6 @@
 $(document).ready(function () {
-  const adapter = new NoteAdapter()
+  const memeAdapter = new MemeAdapter()
+  const userAdapter = new UserAdapter()
   const userController = new UserController()
 
 //--------------------------Sidebar--------------------------//
@@ -45,6 +46,6 @@ $(document).ready(function () {
   document.querySelector('.glitch').remove()
   $('.homepage').css('visibility','hidden')
 
-  
+
 
 });
