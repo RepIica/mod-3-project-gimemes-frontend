@@ -2,12 +2,14 @@ $(document).ready(function () {
   const memeAdapter = new MemeAdapter()
   const userAdapter = new UserAdapter()
   const userController = new UserController()
+  const gifAdapter = new GifAdapter()
 
 //--------------------------Sidebar--------------------------//
 
   let trigger = $('.hamburger'),
       overlay = $('.overlay'),
-     isClosed = false;
+      isClosed = false;
+  // let botStage = 1;
 
     trigger.click(function () {
       hamburger_cross();
@@ -34,24 +36,34 @@ $(document).ready(function () {
 
 //--------------------------APP--------------------------//
   $('#signup-btn').click(()=>{
-    $('.homepage').css('visibility','hidden')
-    $('#container').html(userController.renderSignup())
+    // $('.homepage').css('visibility','hidden')
+    $('.homepage').remove()
+    $('.container').html(userController.renderSignup())
   })
 
   $('#login-btn').click(()=>{
-    $('.homepage').css('visibility','hidden')
-    $('#container').html(userController.renderLogin())
+    // $('.homepage').css('visibility','hidden')
+    $('.container').html('')
+    $('.container').html(userController.renderLogin())
   })
 
-  document.querySelector('.glitch').remove()
-  $('.homepage').css('visibility','hidden')
+  $('#menu-profile').click(()=>{
+    // $('.homepage').css('visibility','hidden')
+    $('.container').html('')
+    $('.container').html(userController.renderLogin())
+  })
+
+  // document.querySelector('.glitch').remove()
+  // $('.homepage').remove()
+
 
 //--------------------------Chat--------------------------//
 // source: https://bootsnipp.com/snippets/6XlB5
 
   let me = {};
-
   let you = {};
+
+  let scrolled = false;
 
   function formatAMPM(date) {
       let hours = date.getHours();
@@ -66,82 +78,141 @@ $(document).ready(function () {
 
   //-- No use time. It is a javaScript effect.
   function insertChat(who, text, time = 0){
-      let control = "";
-      let date = formatAMPM(new Date());
+    scrolled = false;
+    let control = "";
+    let date = formatAMPM(new Date());
 
-      if (who == "me"){
-        control = '<li style="width:100%;">' +
-                    '<div class="msj-rta macro">' +
-                      '<div class="text text-r">' +
-                        '<p>'+text+'</p>' +
-                        '<p><small>'+date+'</small></p>' +
-                      '</div>' +
-                    `<div class="avatar" style="padding:0px 0px 0px 10px !important">
-                      <img src="./imgs/avatar_placeholder-3104431c573177705f4946f586a4eab5.png"></img>
-                    </div>` +
-                  '</li>';
-      }else if (who=="bot") {
-        control = `
-        <li style="width:100%">
-          <div class="side-crop">
-            <div><!-- padding for the gif --></div>
-            <img id="gif-bot"src="./imgs/babygif.gif" alt="gif-bot">
-          </div>
-          <div class="msj macro">
-            <div class="text text-l">
-              <p>${text}</p>
-              <p><small>${date}</small></p>
-            </div>
-          </div>
-
-        </li>
-        `
-      }else{
-        control = '<li style="width:100%">' +
-                    '<div class="msj macro">' +
-                      '<div class="text text-l">' +
-                        '<p>'+ text +'</p>' +
-                        '<p><small>'+date+'</small></p>' +
-                      '</div>' +
+    if (who == "me"){
+      control = '<li style="width:100%;">' +
+                  '<div class="msj-rta macro">' +
+                    '<div class="text text-r">' +
+                      '<p>'+text+'</p>' +
+                      '<p><small>'+date+'</small></p>' +
                     '</div>' +
-                  '</li>';
-      }
+                  `<div class="avatar" style="padding:0px 0px 0px 10px !important">
+                    <img src="./imgs/avatar_placeholder-3104431c573177705f4946f586a4eab5.png"></img>
+                  </div>` +
+                '</li>';
+    }else if (who=="bot") {
+      control = `
+      <li style="width:100%">
+        <div class="side-crop">
+          <div><!-- padding for the gif --></div>
+          <img id="gif-bot"src="./imgs/babygif.gif" alt="gif-bot">
+        </div>
+        <div class="msj macro">
+          <div class="text text-l">
+            <p>${text}</p>
+            <p><small>${date}</small></p>
+          </div>
+        </div>
 
-      setTimeout(
-          function(){
-              $("ul").append(control);
+      </li>
+      `
+    }else{
+      control = '<li style="width:100%">' +
+                  '<div class="msj macro">' +
+                    '<div class="text text-l">' +
+                      '<p>'+ text +'</p>' +
+                      '<p><small>'+date+'</small></p>' +
+                    '</div>' +
+                  '</div>' +
+                '</li>';
+    }
 
-          }, time);
+    setTimeout(
+        function(){
+            $(".frame > ul").append(control);
 
+        }, time);
+
+    // $(".frame > ul").scrollTo('ul > li:last', '1000') //needs scrollTo jquery plugin
+    // updateScroll()
+
+  } // end function insertChat
+
+  function updateScroll(){
+    if(!scrolled){
+      let element = document.querySelector(".frame").querySelector('ul');
+      element.scrollTop = element.scrollHeight;
+    }
   }
+
+  $(".frame > ul").on('scroll', function(){
+    scrolled=true;
+    console.log(`scrolled${scrolled}`);
+  });
+
+  $('#scroll-btn').click(()=>{
+    document.querySelector(".frame").querySelector('ul').style.height = '100%'
+  })
+
 
   function resetChat(){
       $("ul").empty();
   }
 
-  $(".mytext").on("keyup", function(e){
+    $(".stage1").on("keyup", function(e){
       if (e.which == 13){
-          let text = $(this).val();
-          if (text !== ""){
-              insertChat("me", text);
-              $(this).val('');
-          }
+        let text = $(this).val();
+        if (text !== "") {
+          insertChat("me", text);
+          $(this).val('');
+          insertChat("botReply", `Is this what you want as your meme?
+"${text}"`, 500); // <---  Needs to be indented like this =/
+          $('.stage1').off()
+          $('.stage1').switchClass('stage1','stage2')
+          confirm(text)
+        }
       }
-  });
+
+    });
+
+
+  function confirm(textQuery){
+    $(".stage2").on("keyup", function(e){
+      if (e.which == 13){
+        let text = $(this).val();
+        if (text === "yes" || text === "yup" || text === "yeah" || text === "yea" || text === "y") {
+
+          insertChat("me", text);
+          $(this).val('');
+          insertChat("botReply", "Generating your meme...", 500);
+
+          gifAdapter.search(textQuery)
+          .then(data=>{
+            console.log(data.data[0]);
+            const newGif = new Gif(data.data[0])
+            console.log(newGif);
+          })
+
+        }else{
+          insertChat("botReply", "Fine, please tell me your desired meme", 500);
+
+        }
+
+      }
+
+    });
+  }
 
   //-- Clear Chat
   // resetChat();
 
   //-- Print Messages
-  insertChat("bot", "WELCOME TO GIMEME, GET YOUR FRESH GIF MEME BY REPLYING WITH A SEARCH", 500);
-  insertChat("you", "Hi, Pablo", 1500);
-  insertChat("me", "What would you like to talk about today?", 3500);
-  insertChat("you", "Tell me a joke",4000);
-  insertChat("me", "Spaceman: Computer! Computer! Do we bring battery?!", 5500);
-  insertChat("you", "LOL", 6500);
+  function start chat(){
+    insertChat("bot", "WELCOME TO GIMEME", 500);
+    insertChat("botReply", "GET YOUR VERY OWN FRESH GIF MEME RIGHT NOW", 1500);
+    insertChat("botReply", "WHAT IS YOUR MEME?", 3500);
+  }
+  // insertChat("botReply", "Hi, Pablo", 1500);
+  // insertChat("me", "What would you like to talk about today?", 3500);
+  // insertChat("botReply", "Tell me a joke",3600);
+  // insertChat("me", "Spaceman: Computer! Computer! Do we bring battery?!", 3700);
+  // insertChat("botReply", "LOL", 3750);
 
 
 //-- NOTE: No use time on insertChat.
 
 
-});
+}); // end document ready

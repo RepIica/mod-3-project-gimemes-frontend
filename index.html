@@ -30,24 +30,24 @@
       <!-- Sidebar -->
       <nav class="navbar navbar-inverse navbar-fixed-top" id="sidebar-wrapper" role="navigation">
           <ul class="nav sidebar-nav">
-              <li class="sidebar-brand">
+              <li class="sidebar-brand" id="">
                   <a href="#">
-                     Brand
+                     Name placeholder
                   </a>
               </li>
-              <li>
-                  <a href="#">Home</a>
+              <li id="menu-profile">
+                  <a href="#">Profile</a>
               </li>
-              <li>
-                  <a href="#">About</a>
+              <li id="menu-chatbox">
+                  <a href="#">Chatbox</a>
               </li>
-              <li>
-                  <a href="#">Events</a>
+              <li id="menu-top-memes">
+                  <a href="#">Top Memes</a>
               </li>
-              <li>
-                  <a href="#">Team</a>
+              <li id="menu-new-memes">
+                  <a href="#">New Memes(Coming Soon)</a>
               </li>
-              <li class="dropdown">
+              <!-- <li class="dropdown">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">Works <span class="caret"></span></a>
                 <ul class="dropdown-menu" role="menu">
                   <li class="dropdown-header">Dropdown heading</li>
@@ -57,16 +57,16 @@
                   <li><a href="#">Separated link</a></li>
                   <li><a href="#">One more separated link</a></li>
                 </ul>
+              </li> -->
+              <li id="menu-log-out">
+                  <a href="#">Log Out</a>
               </li>
-              <li>
-                  <a href="#">Services</a>
-              </li>
-              <li>
+              <!-- <li>
                   <a href="#">Contact</a>
-              </li>
-              <li>
+              </li> -->
+              <!-- <li>
                   <a href="https://twitter.com/maridlcrmn">Follow me</a>
-              </li>
+              </li> -->
           </ul>
       </nav>
       <!-- /#sidebar-wrapper -->
@@ -80,9 +80,14 @@
           <span class="hamb-bottom"></span>
         </button>
 
-        <div id="container">
+        <div class="container">
+          <div class="row">
+            <div class="col-sm-6 col-sm-offset-3">
+              <div class="glitch" data-text="GIMEMES">GIMEMES</div>
 
-          <div class="glitch" data-text="GIMEMES">GIMEMES</div>
+            </div>
+
+          </div>
 
           <div class="row homepage">
             <div class="col-md-4 col-md-offset-4 col-xs-10 col-xs-offset-1" align="center">
@@ -91,8 +96,8 @@
             </div>
           </div>
 
-          <div class="row">
-            <div class="col-md-4">
+          <!-- <div class="row">
+            <div class="col-md-4"> -->
 
               <!-- <div class="crop">
                 <img src="./imgs/babygif.gif" class="gif-bot" alt="">
@@ -102,8 +107,8 @@
               	<img id="gif-bot"src="./imgs/babygif.gif" alt="gif-bot">
               </div> -->
 
-            </div>
-          </div>
+            <!-- </div>
+          </div> -->
 
           <!-- <div class="row">
             <div class="col-md-4">
@@ -117,7 +122,6 @@
 
             <!-- <div class="col-sm-3 col-sm-offset-4 frame"> -->
             <div class="col-sm-12 frame">
-
               <ul>
                 <!-- <li>
                   <div class="side-crop">
@@ -127,11 +131,13 @@
 
                 </li> -->
               </ul>
+              <!-- <button id="scroll-btn">⬆</button> -->
+              <button id="scroll-btn">enable<br /> scroll</button>
 
-              <div style="background:rgba(255, 0, 0, 0.2)">
+              <div>
                 <div class="msj-rta macro" style="margin:auto">
                   <div class="text text-r">
-                    <input class="mytext" placeholder="Type a message"/>
+                    <input class="mytext stage1" placeholder="Type a message"/>
                   </div>
                 </div>
               </div>
@@ -144,7 +150,7 @@
 
 
 
-        </div><!-- /#page-content-wrapper -->
+      </div><!-- /#page-content-wrapper -->
 
 
       <!--
@@ -163,12 +169,15 @@
 
   </body>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
   <script src="./vendor/bootstrap/js/bootstrap.min.js"></script>
   <script src= 'src/note.js'></script>
   <script src= 'src/user.js'></script>
   <script src= 'src/index.js'></script>
+  <script src= 'src/gif.js'></script>
   <script src= 'src/memesController.js'></script>
   <script src= 'src/userController.js'></script>
+  <script src= 'src/gifAdapter.js'></script>
   <script src= 'src/userAdapter.js'></script>
   <script src= 'src/memeAdapter.js'></script>
 </html>
