@@ -1,31 +1,34 @@
 class MemeAdapter {
-  getNotes() {
-    const baseURL = `http://10.39.110.217:3000/memes`
+  getMemes() {
+    const baseURL = `http://localhost:3000/memes`
     return fetch(baseURL)
       .then(response => response.json());
   }
 
-  getNote(id) {
-    const baseURL = `http://10.39.110.217:3000/memes/${id}`
+  getMeme(id) {
+    const baseURL = `http://localhost:3000/memes/${id}`
     return fetch(baseURL)
       .then(response => response.json());
   }
 
-  newNote(note) {
-    const baseURL = `http://10.39.110.217:3000/memes/`
+  newMeme(gif) {
+    const baseURL = `http://localhost:3000/memes/`
     const options = {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify(note)
+      body: JSON.stringify({
+        "memes":gif,
+        "user_id": document.querySelector('#menu-name').querySelector('p').value
+      })
     }
     return fetch(baseURL, options)
       .then(r => r.json())
   }
 
-  editNote(obj) {
-    const baseURL = `http://10.39.110.217:3000/memes/${obj.id}`
+  editMeme(obj) {
+    const baseURL = `http://localhost:3000/memes/${obj.id}`
     const options = {
       method: 'PATCH',
       headers: {
@@ -39,8 +42,8 @@ class MemeAdapter {
       .then(response => console.log('Success:', response))
   }
 
-  deleteNote(id) {
-    const baseURL = `http://10.39.110.217:3000/memes/${id}`
+  deleteMeme(id) {
+    const baseURL = `http://localhost:3000/memes/${id}`
     const options = {
       method: 'DELETE'
     }

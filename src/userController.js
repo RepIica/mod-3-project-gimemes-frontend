@@ -3,12 +3,12 @@ class UserController {
     return `
       <div class="row signup">
         <div class="col-md-4 col-md-offset-4 col-xs-10 col-xs-offset-1">
-          <form>
+          <form id="signup-form">
             <fieldset>
               <label for="nameField">Name</label>
               <input type="text" id="nameField">
               <label for="usernameField">Username</label>
-              <input type="text" id="nameField">
+              <input type="text" id="usernameField">
               <label for="ageRangeField">Age Range</label>
               <select id="ageRangeField">
                 <option value="0-13">0-13</option>
@@ -30,15 +30,15 @@ class UserController {
     `
   }
   renderLogin(){
-    return `
+    return `<br><br><br>
       <div class="row login">
         <div class="col-md-4 col-md-offset-4 col-xs-10 col-xs-offset-1">
-          <form>
+          <form id="login-form">
             <fieldset>
               <label for="usernameField">Username</label>
-              <input type="text" id="nameField">
-              <label for="usernameField">Password</label>
-              <input type="text" id="nameField" placeholder="learnlovecode">
+              <input type="text" id="usernameField">
+              <label for="passwordField">Password</label>
+              <input type="text" id="passwordField" placeholder="learnlovecode">
               <input class="button-primary" type="submit" value="Log Me IN ALREADY!!">
             </fieldset>
           </form>
@@ -46,4 +46,25 @@ class UserController {
       </div>
     `
   }
+  getUser(){
+    const obj = {}
+    obj.name = document.querySelector('#nameField').value
+    obj.username = document.querySelector('#usernameField').value
+    const newUser = new User(obj)
+    return newUser
+  }
+
+  getUserLogin(){
+    const username = document.querySelector('#usernameField').value
+    return username
+  }
+
+  renderUser(username,id){
+    document.querySelector('#menu-name').querySelector('a').innerHTML = username
+    document.querySelector('#menu-name').innerHTML += `
+      <p style="color:transparent">${id}</p>
+    `
+
+  }
+
 }

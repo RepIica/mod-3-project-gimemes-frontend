@@ -6,7 +6,7 @@ const Gif = (() => {
     constructor(gif){
       this.id = gif.id
       this.title = gif.title
-      this.url = gif.images.fixed_height.url
+      this.url = gif.images.original.url
 
       all.push(this)
     }

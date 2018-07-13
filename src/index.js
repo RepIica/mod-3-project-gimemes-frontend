@@ -37,20 +37,36 @@ $(document).ready(function () {
 //--------------------------APP--------------------------//
   $('#signup-btn').click(()=>{
     // $('.homepage').css('visibility','hidden')
-    $('.homepage').remove()
     $('.container').html(userController.renderSignup())
+  })
+
+  document.addEventListener('submit', e => {
+    if (e.target.id === 'signup-form') {
+      e.preventDefault()
+      userAdapter.createUser(userController.getUser())
+      console.log(e.target.id);
+      $('.container').html(userController.renderLogin())
+    } else if(e.target.id === 'login-form'){
+      e.preventDefault()
+      userAdapter.getUser(userController.getUserLogin())
+        .then(r=>{
+          console.log(r);
+          userController.renderUser(r.username,r.id)
+          startChat()
+          addChatListener()
+        })
+      console.log(e.target.id);
+    }
   })
 
   $('#login-btn').click(()=>{
     // $('.homepage').css('visibility','hidden')
-    $('.container').html('')
     $('.container').html(userController.renderLogin())
   })
 
   $('#menu-profile').click(()=>{
     // $('.homepage').css('visibility','hidden')
-    $('.container').html('')
-    $('.container').html(userController.renderLogin())
+    $('.container').html(memeAdapter.memeController.renderMeme())
   })
 
   // document.querySelector('.glitch').remove()
@@ -151,22 +167,27 @@ $(document).ready(function () {
   function resetChat(){
       $("ul").empty();
   }
-
-    $(".stage1").on("keyup", function(e){
-      if (e.which == 13){
-        let text = $(this).val();
-        if (text !== "") {
-          insertChat("me", text);
-          $(this).val('');
-          insertChat("botReply", `Is this what you want as your meme?
-"${text}"`, 500); // <---  Needs to be indented like this =/
-          $('.stage1').off()
-          $('.stage1').switchClass('stage1','stage2')
-          confirm(text)
+    console.log('line 169');
+    console.log($(".stage1"));
+    function addChatListener(){
+      $(".stage1").on("keyup", function(e){
+        console.log('KEYS PRESSED');
+        if (e.which == 13){
+          let text = $(this).val();
+          if (text !== "") {
+            insertChat("me", text);
+            $(this).val('');
+            insertChat("botReply", `Is this what you want as your meme?
+            "${text}"`, 500); // <---  Needs to be indented like this =/
+            $('.stage1').off()
+            $('.stage1').switchClass('stage1','stage2')
+            confirm(text)
+          }
         }
-      }
 
-    });
+      });
+
+    }
 
 
   function confirm(textQuery){
@@ -183,7 +204,7 @@ $(document).ready(function () {
           .then(data=>{
             console.log(data.data[0]);
             const newGif = new Gif(data.data[0])
-            console.log(newGif);
+            insertChat("botReply", `<img src="${newGif.url}" />`, 500)
           })
 
         }else{
@@ -200,8 +221,28 @@ $(document).ready(function () {
   // resetChat();
 
   //-- Print Messages
-  function start chat(){
-    insertChat("bot", "WELCOME TO GIMEME", 500);
+  function startChat(){ //call when user logs in
+    $('.container').html(`
+      <div class="row">
+
+        <div class="col-sm-12 frame">
+          <ul>
+          </ul>
+          <button id="scroll-btn">enable<br /> scroll</button>
+
+          <div>
+            <div class="msj-rta macro" style="margin:auto">
+              <div class="text text-r">
+                <input class="mytext stage1" placeholder="Type a message"/>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    `)
+    insertChat("bot", "Hello, I'm the Memebot. WELCOME TO GIMEME!", 500);
     insertChat("botReply", "GET YOUR VERY OWN FRESH GIF MEME RIGHT NOW", 1500);
     insertChat("botReply", "WHAT IS YOUR MEME?", 3500);
   }
